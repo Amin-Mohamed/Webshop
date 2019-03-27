@@ -9,6 +9,7 @@ namespace Webshop.Repositories
 {
     public class ProductRepository
     {
+
         private readonly string connectionString;
 
         public ProductRepository(string connectionString)
@@ -29,6 +30,21 @@ namespace Webshop.Repositories
             using (var connection = new MySqlConnection(connectionString))
             {
                 return connection.QuerySingleOrDefault<Product>("SELECT * FROM products WHERE Id = @id", new { id });
+            }
+        }
+        public void Add(Product Product)
+        {
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                connection.Execute("INSERT INTO products (name, description, price, stock) VALUES(@name, @description, @price, @stock, @image)", Product);
+            }
+        }
+
+        public void Delete(int id)
+        {
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                connection.Execute("DELETE FROM products WHERE id=@id", new { id });
             }
         }
     }
