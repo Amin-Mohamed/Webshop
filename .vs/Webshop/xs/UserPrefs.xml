@@ -1,0 +1,31 @@
+﻿<Properties StartupConfiguration="{95929AD9-FCFB-49D0-85BC-87A14DD33F47}|Default">
+  <MonoDevelop.Ide.ItemProperties.Webshop PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Webshop/Repositories/ProductRepository.cs">
+    <Files>
+      <File FileName="Webshop/Controllers/ProductController.cs" Line="59" Column="10" />
+      <File FileName="Webshop/Models/Product.cs" Line="13" Column="1" />
+      <File FileName="Webshop/Services/ProductService.cs" Line="1" Column="1" />
+      <File FileName="Webshop/Repositories/ProductRepository.cs" Line="29" Column="10" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Webshop" expanded="True">
+            <Node name="Webshop" expanded="True">
+              <Node name="Repositories" expanded="True">
+                <Node name="ProductRepository.cs" selected="True" />
+              </Node>
+              <Node name="Services" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

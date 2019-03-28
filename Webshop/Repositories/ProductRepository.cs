@@ -36,7 +36,7 @@ namespace Webshop.Repositories
         {
             using (var connection = new MySqlConnection(connectionString))
             {
-                connection.Execute("INSERT INTO products (name, description, price, stock) VALUES(@name, @description, @price, @stock, @image)", Product);
+                connection.Execute("INSERT INTO products (name, description, price) VALUES(@name, @description, @price)", Product);
             }
         }
 
