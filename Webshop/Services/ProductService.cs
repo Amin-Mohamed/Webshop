@@ -5,7 +5,6 @@ using Webshop.Repositories;
 
 namespace Webshop.Services
 {
-
     public class ProductService
     {
         private readonly ProductRepository ProductRepository;
