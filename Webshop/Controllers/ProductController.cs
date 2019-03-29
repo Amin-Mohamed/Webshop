@@ -12,7 +12,6 @@ namespace Webshop.Controllers
     public class ProductController : Controller
     {
         private string connectionString;
-
         private readonly ProductService productService;
 
         public ProductController(IConfiguration configuration)

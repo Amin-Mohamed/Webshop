@@ -9,7 +9,6 @@ namespace Webshop.Repositories
 {
     public class ProductRepository
     {
-
         private readonly string connectionString;
 
         public ProductRepository(string connectionString)
@@ -32,6 +31,7 @@ namespace Webshop.Repositories
                 return connection.QuerySingleOrDefault<Product>("SELECT * FROM products WHERE Id = @id", new { id });
             }
         }
+
         public void Add(Product Product)
         {
             using (var connection = new MySqlConnection(connectionString))
@@ -47,5 +47,6 @@ namespace Webshop.Repositories
                 connection.Execute("DELETE FROM products WHERE id=@id", new { id });
             }
         }
+
     }
 }
