@@ -8,7 +8,6 @@ namespace Webshop.Repositories
 {
     public class CartRepository
     {
-
         private readonly string connectionString;
 
         public CartRepository(string connectionString)
@@ -29,15 +28,12 @@ namespace Webshop.Repositories
             using (var connection = new MySqlConnection(this.connectionString))
             {
                 var cart = connection.QuerySingleOrDefault<Cart>("SELECT * FROM cart WHERE id = @id", new { id });
-                return cart;
-            }
-        }
+                //CartItem
+                cart.Products = connection.Query<Product>("SELECT * FROM cart_items c" +
+                	"INNER JOIN products p ON c.product_id = p.id " +
+                	"WHERE c.cart_id = @id", new { id }).ToList();
 
-        public void Add(CartItem cartItem)
-        {
-            using (var connection = new MySqlConnection(connectionString))
-            {
-                connection.Execute("INSERT INTO cart_items (ProductId, CartId, Quantity) VALUES(@product_id, @cart_id, @quantity)", cartItem);
+                return cart;
             }
         }
     }

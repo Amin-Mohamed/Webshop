@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Webshop.Models;
 using Dapper;
 using MySql.Data.MySqlClient;
@@ -36,7 +35,10 @@ namespace Webshop.Repositories
         {
             using (var connection = new MySqlConnection(connectionString))
             {
-                connection.Execute("INSERT INTO products (name, description, price) VALUES(@name, @description, @price)", Product);
+                connection.Execute("INSERT INTO products " +
+                	"(name, description, price) " +
+                	"VALUES" +
+                	"(@name, @description, @price)", Product);
             }
         }
 

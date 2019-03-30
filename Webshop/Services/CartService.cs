@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Webshop.Models;
 using Webshop.Repositories;
 
@@ -21,23 +18,9 @@ namespace Webshop.Services
             return cartRepository.Get();
         }
 
-        public Cart Get(int CartId)
+        public Cart Get(int id)
         {
-            if (CartId < 1)
-            {
-                return null;
-            }
-
-            return cartRepository.Get(CartId);
-        }
-
-        public bool Add(CartItem cartItem)
-        {
-            if (cartItem == null) return false;
-            if (!cartItem.GetType().GetProperties().Any(p => p.GetValue(cartItem) != null)) return false;
-
-            cartRepository.Add(cartItem);
-            return true;
+            return cartRepository.Get(id);
         }
     }
 }

@@ -7,6 +7,5 @@ namespace Webshop.Models
     {
         public int CartId { get; set; }
         public List<Product> Products { get; set; }
-        public int TotalPrice { get; set; }
     }
 }
