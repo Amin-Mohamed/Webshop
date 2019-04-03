@@ -1,45 +1,49 @@
-﻿using System;
-using Webshop.Models;
-using Webshop.Repositories;
-using Webshop.Services;
+﻿using Webshop.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using MySql.Data.MySqlClient;
+using Dapper;
+using System.Linq;
+using Webshop.Services;
+using Webshop.Repositories;
 
 namespace Webshop.Controllers
 {
     [Route("api/[controller]")]
     public class CartController : Controller
     {
-        private string connectionString;
-        private CartService cartService;
+        private readonly CartService cartService;
 
         public CartController(IConfiguration configuration)
         {
-            this.connectionString = configuration.GetConnectionString("ConnectionString");
-            this.cartService = new CartService(new CartRepository(this.connectionString));
+            var connectionString = configuration.GetConnectionString("ConnectionString");
+            this.cartService = new CartService(new CartRepository(connectionString));
         }
 
-        [HttpGet]
-        [ProducesResponseType(typeof(List<Cart>), StatusCodes.Status200OK)]
-        public IActionResult Get()
+        // GET api/cart/id
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Cart), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult Get(int id)
         {
-            var cart = cartService.Get();
+            var cart = this.cartService.Get(id);
             return Ok(cart);
         }
 
-        [HttpGet("{id}")]
-        [ProducesResponseType(typeof(Cart), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(Cart), StatusCodes.Status404NotFound)]
-        public IActionResult Get(int id)
+        // POST api/cart
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Post([FromBody] CartItem cartItem)
         {
-            var cart = this.cartService.Get(id);
-            if (cart != null)
+            if (this.cartService.Add(cartItem))
             {
-                return Ok(cart);
+                return Ok();
             }
-            return NotFound();
+
+            return BadRequest();
         }
     }
 }

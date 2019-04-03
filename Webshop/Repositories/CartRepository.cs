@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using Webshop.Models;
+﻿using Webshop.Models;
 using Dapper;
 using MySql.Data.MySqlClient;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Webshop.Repositories
@@ -15,25 +15,52 @@ namespace Webshop.Repositories
             this.connectionString = connectionString;
         }
 
-        public List<Cart> Get()
+        public Cart Get(int id)
         {
-            using (var connection = new MySqlConnection(connectionString))
+            Cart cart = new Cart();
+            cart.Id = id;
+            using (var connection = new MySqlConnection(this.connectionString))
             {
-                return connection.Query<Cart>("SELECT * FROM cart").ToList();
+                cart.Products = connection.Query<Product>("SELECT " +
+                    "p.id, p.title, p.description, p.price FROM products AS p " +
+                    "LEFT JOIN cartItems AS ci " +
+                    "ON p.id = ci.product_id LEFT JOIN carts AS c" +
+                    " ON ci.cart_id = c.id WHERE c.id = @id",new { id }).ToList();
+                return cart;
             }
         }
 
-        public Cart Get(int id)
+        //public bool Exists(int? id)
+        //{
+        //    int? result;
+
+        //    using (var connection = new MySqlConnection(this.connectionString))
+        //    {
+        //        result = connection.Query<int?>("SELECT id FROM carts WHERE id = @id", new { id }).FirstOrDefault();
+        //    }
+
+        //    return result != null;
+        //}
+
+
+        public int Create()
         {
             using (var connection = new MySqlConnection(this.connectionString))
             {
-                var cart = connection.QuerySingleOrDefault<Cart>("SELECT * FROM cart WHERE id = @id", new { id });
-                //CartItem
-                cart.Products = connection.Query<Product>("SELECT * FROM cart_items c" +
-                	"INNER JOIN products p ON c.product_id = p.id " +
-                	"WHERE c.cart_id = @id", new { id }).ToList();
+                connection.Execute("INSERT INTO carts() VALUES ()");
+                return connection.Query<int>("SELECT LAST_INSERT_ID();").FirstOrDefault();
+            }
+        }
 
-                return cart;
+        public void Add(CartItem cartItem)
+        {
+            int? cartId = cartItem.CartId;
+            int productId = cartItem.ProductId;
+
+            using (var connection = new MySqlConnection(this.connectionString))
+            {
+                connection.Execute("INSERT INTO cartItems(product_id, cart_id) VALUES (@productId, @cartId)",
+                    cartItem);
             }
         }
     }

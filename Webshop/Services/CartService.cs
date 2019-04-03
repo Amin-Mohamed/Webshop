@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Transactions;
 using Webshop.Models;
 using Webshop.Repositories;
 
@@ -13,14 +13,30 @@ namespace Webshop.Services
             this.cartRepository = cartRepository;
         }
 
-        public List<Cart> Get()
-        {
-            return cartRepository.Get();
-        }
-
         public Cart Get(int id)
         {
-            return cartRepository.Get(id);
+            return this.cartRepository.Get(id);
+        }
+
+        public bool Add(CartItem cartItem)
+        {
+            if (cartItem.CartId != null && cartItem.CartId <= 0)
+            {
+                return false;
+            }
+
+            if (cartItem.CartId == null)
+            {
+                cartItem.CartId = this.cartRepository.Create();
+            }
+
+            //if (!this.cartRepository.Exists(cartItem.CartId))
+            //{
+            //    return false;
+            //}
+
+            this.cartRepository.Add(cartItem);
+            return true;
         }
     }
 }
