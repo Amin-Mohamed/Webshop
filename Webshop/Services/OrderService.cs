@@ -6,23 +6,23 @@ namespace Webshop.Services
 {
     public class OrderService
     {
-        public OrderRepository OrderRepository { get; set; }
-        public CartRepository CartRepository;
+        public OrderRepository orderRepository;
 
-        public OrderService(OrderRepository orderRepository, CartRepository cartRepository)
+        public OrderService(OrderRepository orderRepository)
         {
-            this.OrderRepository = orderRepository;
-            this.CartRepository = cartRepository;
+            this.orderRepository = orderRepository;
         }
 
         public List<Order> Get()
         {
-            return OrderRepository.Get();
+            return orderRepository.Get();
         }
 
         public Order Get(int id)
         {
-            return OrderRepository.Get(id);
+            return orderRepository.Get(id);
         }
+
+
     }
 }

@@ -50,8 +50,8 @@ namespace Webshop
                 app.UseHsts();
             }
 
-                    app.UseHttpsRedirection();
-                    app.UseMvc();
+            app.UseHttpsRedirection();
+            app.UseMvc();
         }
     }
 }

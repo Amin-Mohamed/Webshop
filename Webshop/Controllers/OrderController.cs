@@ -12,15 +12,12 @@ namespace Webshop.Controllers
     [Route("api/[controller]")]
     public class OrderController : Controller
     {
-        private string connectionString;
         private readonly OrderService orderService;
 
         public OrderController(IConfiguration configuration)
         {
-            this.connectionString = configuration.GetConnectionString("ConnectionString");
-            this.orderService = new OrderService(
-                new OrderRepository(connectionString),
-                new CartRepository(connectionString));
+            var connectionString = configuration.GetConnectionString("ConnectionString");
+            this.orderService = new OrderService(new OrderRepository(connectionString));
         }
 
         [HttpGet]

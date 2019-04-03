@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Transactions;
 using Webshop.Models;
 using Webshop.Repositories;
@@ -28,7 +27,9 @@ namespace Webshop.Services
         public bool Add(Product product)
         {
             if (string.IsNullOrEmpty(product?.Title) ||
-                string.IsNullOrEmpty(product?.Description))
+                string.IsNullOrEmpty(product?.Description) ||
+                product?.Price == null
+                )
             {
                 return false;
             }
@@ -55,5 +56,6 @@ namespace Webshop.Services
 
                 return true;
             }
-   }    }
+        } 
+   }
 }

@@ -3,6 +3,7 @@ using Webshop.Models;
 using Dapper;
 using MySql.Data.MySqlClient;
 using System.Linq;
+using Webshop.Services;
 
 namespace Webshop.Repositories
 {
@@ -36,9 +37,9 @@ namespace Webshop.Repositories
             using (var connection = new MySqlConnection(connectionString))
             {
                 connection.Execute("INSERT INTO products " +
-                	"(title, description, price, image) " +
+                	"(title, description, price) " +
                 	"VALUES" +
-                    "(@title, @description, @price, @image)", Product);
+                    "(@title, @description, @price)", Product);
             }
         }
 

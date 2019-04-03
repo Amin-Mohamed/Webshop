@@ -30,19 +30,6 @@ namespace Webshop.Repositories
             }
         }
 
-        //public bool Exists(int? id)
-        //{
-        //    int? result;
-
-        //    using (var connection = new MySqlConnection(this.connectionString))
-        //    {
-        //        result = connection.Query<int?>("SELECT id FROM carts WHERE id = @id", new { id }).FirstOrDefault();
-        //    }
-
-        //    return result != null;
-        //}
-
-
         public int Create()
         {
             using (var connection = new MySqlConnection(this.connectionString))

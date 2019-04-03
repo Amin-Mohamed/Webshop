@@ -30,11 +30,6 @@ namespace Webshop.Services
                 cartItem.CartId = this.cartRepository.Create();
             }
 
-            //if (!this.cartRepository.Exists(cartItem.CartId))
-            //{
-            //    return false;
-            //}
-
             this.cartRepository.Add(cartItem);
             return true;
         }

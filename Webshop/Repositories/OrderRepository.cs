@@ -19,7 +19,7 @@ namespace Webshop.Repositories
         {
             using (var connection = new MySqlConnection(this.connectionString))
             {
-                var orders = connection.Query<Order>("SELECT * FROM Orders").ToList();
+                var orders = connection.Query<Order>("SELECT * FROM orders").ToList();
 
                 return orders;
             }
@@ -36,19 +36,5 @@ namespace Webshop.Repositories
             }
         }
 
-        public int Create(Cart cart)
-        {
-            using (var Connection = new MySqlConnection(this.connectionString))
-            {
-                var cartId = cart.CartId;
-
-                var orderId = Connection.Execute("INSERT INTO Orders " +
-                    "(CartId, CustomerName, Adress, Email) " +
-                    "VALUES " +
-                    "(@cart_id, @customer_name, @adress, @eamil)", new { cartId, });
-
-                return orderId;
-            }
-        }
     }
 }

@@ -24,7 +24,7 @@ namespace Webshop.Controllers
 
         // GET api/cart/id
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(Cart), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<Cart>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult Get(int id)
         {
