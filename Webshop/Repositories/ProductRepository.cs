@@ -42,14 +42,5 @@ namespace Webshop.Repositories
                     "(@title, @description, @price)", Product);
             }
         }
-
-        public void Delete(int id)
-        {
-            using (var connection = new MySqlConnection(connectionString))
-            {
-                connection.Execute("DELETE FROM products WHERE id=@id", new { id });
-            }
-        }
-
     }
 }

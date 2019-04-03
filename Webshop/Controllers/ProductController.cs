@@ -54,19 +54,5 @@ namespace Webshop.Controllers
 
             return Ok();
         }
-
-        [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Delete(int id)
-        {
-            var result = productService.Delete(id);
-
-            if (!result)
-            {
-                return NotFound();
-            }
-            return Ok();
-        }
     }
 }

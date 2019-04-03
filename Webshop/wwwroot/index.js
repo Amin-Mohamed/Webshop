@@ -9,7 +9,7 @@ fetch('https://localhost:5001/api/product')
         console.log(data);
         data.forEach(item => {
             productCard.innerHTML +=  `
-            <div class="title"> ${item['name']} </div>
+            <div class="title"> ${item['title']} </div>
             <div class="price"> ${item['price']} </div>
             <button class="add-to-cart" type="button" name="button"><i class="fas fa-cart-plus"></i></button>
             <div class="description"> ${item['description']} </div>

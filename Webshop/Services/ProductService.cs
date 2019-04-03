@@ -38,24 +38,5 @@ namespace Webshop.Services
 
             return true;
         }
-
-        public bool Delete(int id)
-        {
-            using (var transaction = new TransactionScope())
-            {
-                var productItem = this.productRepository.Get(id);
-
-                if (productItem == null)
-                {
-                    return false;
-                }
-
-                this.productRepository.Delete(id);
-
-                transaction.Complete();
-
-                return true;
-            }
-        } 
    }
 }
