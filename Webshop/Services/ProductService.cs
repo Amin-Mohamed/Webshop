@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using Webshop.Models;
 using Webshop.Repositories;
 
@@ -7,39 +8,52 @@ namespace Webshop.Services
 {
     public class ProductService
     {
-        private readonly ProductRepository ProductRepository;
+        private readonly IProductRepository productRepository;
 
-        public ProductService(ProductRepository ProductRepository)
+        public ProductService(IProductRepository productRepository)
         {
-            this.ProductRepository = ProductRepository;
+            this.productRepository = productRepository;
         }
 
         public List<Product> Get()
         {
-            return ProductRepository.Get();
+            return productRepository.Get();
         }
 
         public Product Get(int id)
         {
-            return ProductRepository.Get(id);
+            return productRepository.Get(id);
         }
 
         public bool Add(Product product)
         {
-            if (product == null) return false;
-            if (!product.GetType().GetProperties().Any(p => p.GetValue(product) != null)) return false;
+            if (string.IsNullOrEmpty(product?.Title) ||
+                string.IsNullOrEmpty(product?.Description))
+            {
+                return false;
+            }
 
-            ProductRepository.Add(product);
+            this.productRepository.Add(product);
+
             return true;
-
         }
 
         public bool Delete(int id)
         {
-            if (ProductRepository.Get(id) == null) return false;
+            using (var transaction = new TransactionScope())
+            {
+                var productItem = this.productRepository.Get(id);
 
-            ProductRepository.Delete(id);
-            return true;
-        }
-    }
+                if (productItem == null)
+                {
+                    return false;
+                }
+
+                this.productRepository.Delete(id);
+
+                transaction.Complete();
+
+                return true;
+            }
+   }    }
 }

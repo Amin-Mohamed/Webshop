@@ -11,15 +11,13 @@ namespace Webshop.Controllers
     [Route("api/[controller]")]
     public class ProductController : Controller
     {
-        private string connectionString;
         private readonly ProductService productService;
 
         public ProductController(IConfiguration configuration)
         {
-            connectionString = configuration.GetConnectionString("ConnectionString");
-            productService = new ProductService(new ProductRepository(connectionString));
+            var connectionString = configuration.GetConnectionString("ConnectionString");
+            this.productService = new ProductService(new ProductRepository(connectionString));
         }
-
 
         [HttpGet]
         [ProducesResponseType(typeof(List<Product>), StatusCodes.Status200OK)]

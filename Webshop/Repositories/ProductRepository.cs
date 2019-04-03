@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Webshop.Repositories
 {
-    public class ProductRepository
+    public class ProductRepository :IProductRepository
     {
         private readonly string connectionString;
 
@@ -36,9 +36,9 @@ namespace Webshop.Repositories
             using (var connection = new MySqlConnection(connectionString))
             {
                 connection.Execute("INSERT INTO products " +
-                	"(name, description, price) " +
+                	"(title, description, price, image) " +
                 	"VALUES" +
-                	"(@name, @description, @price)", Product);
+                    "(@title, @description, @price, @image)", Product);
             }
         }
 
