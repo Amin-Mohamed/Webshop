@@ -1,5 +1,5 @@
 # Webshop
-<img src="https://media.giphy.com/media/9Pmf3QJiDHwyftez6i/giphy.gif" width="800" height="400" />
+<img src="https://media.giphy.com/media/1zDik54y6XGve/giphy.gif" width="800" height="400" />
 
 C# assignment
 --------------
