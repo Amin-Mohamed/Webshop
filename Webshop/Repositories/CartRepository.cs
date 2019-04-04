@@ -50,5 +50,13 @@ namespace Webshop.Repositories
                     cartItem);
             }
         }
+
+        public void Delete(int id)
+        {
+            using (var connection = new MySqlConnection(this.connectionString))
+            {
+                connection.Execute("DELETE FROM cartItems WHERE cart_id=@id; DELETE FROM carts WHERE id=@id", new { id });
+            }
+        }
     }
 }

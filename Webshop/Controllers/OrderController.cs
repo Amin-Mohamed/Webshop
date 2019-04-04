@@ -1,36 +1,27 @@
-﻿using System;
-using Webshop.Models;
+﻿using Webshop.Models;
 using Webshop.Repositories;
 using Webshop.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 
 namespace Webshop.Controllers
 {
+
     [Route("api/[controller]")]
     public class OrderController : Controller
     {
+        private readonly string connectionString;
         private readonly OrderService orderService;
 
         public OrderController(IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("ConnectionString");
-            this.orderService = new OrderService(new OrderRepository(connectionString));
-        }
-
-        [HttpGet]
-        [ProducesResponseType(typeof(List<Order>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(List<Order>), StatusCodes.Status404NotFound)]
-        public IActionResult Get()
-        {
-            var order = this.orderService.Get();
-            if (order != null)
-            {
-                return Ok(order);
-            }
-            return NotFound();
+            this.connectionString = configuration.GetConnectionString("ConnectionString");
+            this.orderService = new OrderService
+                (
+                    new OrderRepository(connectionString),
+                    new CartRepository(connectionString)
+                );
         }
 
         [HttpGet("{id}")]
@@ -44,6 +35,33 @@ namespace Webshop.Controllers
                 return Ok(order);
             }
             return NotFound();
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Post([FromBody] Order order)
+        {
+            var result = this.orderService.Add(order);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var result = this.orderService.Delete(id);
+
+            if (!result)
+            {
+                return NotFound();
+            }
+
+            return Ok();
         }
     }
 }

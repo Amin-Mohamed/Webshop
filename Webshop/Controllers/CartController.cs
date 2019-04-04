@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
-using MySql.Data.MySqlClient;
-using Dapper;
-using System.Linq;
 using Webshop.Services;
 using Webshop.Repositories;
 

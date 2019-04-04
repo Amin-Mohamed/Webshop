@@ -28,8 +28,7 @@ namespace Webshop.UnitTests.Services
                 Id = Id,
                 Title = "car",
                 Description = "BWM",
-                Price = 1300,
-                Image = null
+                Price = 1300
             };
 
             A.CallTo(() => this.productRepository.Get(Id)).Returns(productItem);

@@ -21,6 +21,7 @@ namespace Webshop.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(List<Product>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Get()
         {
             var product = productService.Get();
@@ -29,6 +30,7 @@ namespace Webshop.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Get(int id)
         {
             var productItem = productService.Get(id);
